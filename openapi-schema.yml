@@ -1,0 +1,864 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /users/new-verify/:
+    get:
+      operationId: listGetNewVerifications
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - users
+  /post/lists/:
+    get:
+      operationId: listPosts
+      description: ''
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+          description: ''
+      tags:
+      - post
+  /post/{id}/:
+    get:
+      operationId: retrievePost
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this post.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+          description: ''
+      tags:
+      - post
+    put:
+      operationId: updatePost
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this post.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Post'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+          description: ''
+      tags:
+      - post
+    patch:
+      operationId: partialUpdatePost
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this post.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Post'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+          description: ''
+      tags:
+      - post
+    delete:
+      operationId: destroyPost
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this post.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - post
+  /post/{id}/likes/:
+    get:
+      operationId: listPostLikes
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PostLike'
+          description: ''
+      tags:
+      - post
+  /post/{id}/comments/:
+    get:
+      operationId: listComments
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+          description: ''
+      tags:
+      - post
+  /post/comments/:
+    get:
+      operationId: listPostComments
+      description: ''
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Comment'
+          description: ''
+      tags:
+      - post
+    post:
+      operationId: createPostComment
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+      tags:
+      - post
+  /post/comments/{id}/:
+    get:
+      operationId: retrievePostComment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this post comment.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+      tags:
+      - post
+  /post/comments/{id}/likes/:
+    get:
+      operationId: listCommentLikes
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommentLike'
+          description: ''
+      tags:
+      - post
+  /users/login/:
+    post:
+      operationId: createLogin
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+          description: ''
+      tags:
+      - users
+  /users/login/refresh/:
+    post:
+      operationId: createLoginRefresh
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoginRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoginRefresh'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginRefresh'
+          description: ''
+      tags:
+      - users
+  /users/logout/:
+    post:
+      operationId: createLogout
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - users
+  /users/signup/:
+    post:
+      operationId: createUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SignUp'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SignUp'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignUp'
+          description: ''
+      tags:
+      - users
+  /users/verify/:
+    post:
+      operationId: createVerify
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - users
+  /users/forgot-password/:
+    post:
+      operationId: createForgotPassword
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - users
+  /post/create/:
+    post:
+      operationId: createPost
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Post'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+          description: ''
+      tags:
+      - post
+  /post/{id}/comments/create/:
+    post:
+      operationId: createComment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+      tags:
+      - post
+  /post/{id}/create-delete-likes/:
+    post:
+      operationId: createPostLikeApi
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - post
+  /post/comments/{id}/create-delete-like/:
+    post:
+      operationId: createCommentLikeApi
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - post
+  /users/change-user/:
+    put:
+      operationId: updateChangeUserInformation
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeUserInformation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangeUserInformation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangeUserInformation'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeUserInformation'
+          description: ''
+      tags:
+      - users
+    patch:
+      operationId: partialUpdateChangeUserInformation
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeUserInformation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangeUserInformation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangeUserInformation'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeUserInformation'
+          description: ''
+      tags:
+      - users
+  /users/change-user-photo/:
+    put:
+      operationId: updateChangeUserPhoto
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - users
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        author:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              readOnly: true
+            username:
+              type: string
+              description: Required. 150 characters or fewer. Letters, digits and
+                @/./+/-/_ only.
+              pattern: ^[\w.@+-]+\z
+              maxLength: 150
+            photo:
+              type: string
+              format: binary
+              nullable: true
+          required:
+          - username
+          readOnly: true
+        image:
+          type: string
+          format: binary
+        caption:
+          type: string
+          maxLength: 2000
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        post_likes_count:
+          type: string
+          readOnly: true
+        post_comments_count:
+          type: string
+          readOnly: true
+        me_liked:
+          type: string
+          readOnly: true
+      required:
+      - caption
+    PostLike:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        author:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              readOnly: true
+            username:
+              type: string
+              description: Required. 150 characters or fewer. Letters, digits and
+                @/./+/-/_ only.
+              pattern: ^[\w.@+-]+\z
+              maxLength: 150
+            photo:
+              type: string
+              format: binary
+              nullable: true
+          required:
+          - username
+          readOnly: true
+        post:
+          type: string
+      required:
+      - post
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        author:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              readOnly: true
+            username:
+              type: string
+              description: Required. 150 characters or fewer. Letters, digits and
+                @/./+/-/_ only.
+              pattern: ^[\w.@+-]+\z
+              maxLength: 150
+            photo:
+              type: string
+              format: binary
+              nullable: true
+          required:
+          - username
+          readOnly: true
+        comment:
+          type: string
+        post:
+          type: string
+        parent:
+          type: string
+          nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        replies:
+          type: string
+          readOnly: true
+        me_liked:
+          type: string
+          readOnly: true
+        likes_count:
+          type: string
+          readOnly: true
+      required:
+      - comment
+      - post
+    CommentLike:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        author:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              readOnly: true
+            username:
+              type: string
+              description: Required. 150 characters or fewer. Letters, digits and
+                @/./+/-/_ only.
+              pattern: ^[\w.@+-]+\z
+              maxLength: 150
+            photo:
+              type: string
+              format: binary
+              nullable: true
+          required:
+          - username
+          readOnly: true
+        comment:
+          type: string
+      required:
+      - comment
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+          readOnly: true
+        password:
+          type: string
+          writeOnly: true
+        userinput:
+          type: string
+      required:
+      - password
+      - userinput
+    LoginRefresh:
+      type: object
+      properties:
+        refresh:
+          type: string
+        access:
+          type: string
+          readOnly: true
+      required:
+      - refresh
+    SignUp:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        auth_type:
+          enum:
+          - via_phone
+          - via_email
+          type: string
+          readOnly: true
+        auth_status:
+          enum:
+          - new
+          - code_verified
+          - done
+          - photo_step
+          type: string
+          readOnly: true
+        email_phone_number:
+          type: string
+    ChangeUserInformation:
+      type: object
+      properties:
+        first_name:
+          type: string
+          writeOnly: true
+        last_name:
+          type: string
+          writeOnly: true
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        confirm_password:
+          type: string
+          writeOnly: true
+      required:
+      - first_name
+      - last_name
+      - username
+      - password
+      - confirm_password
